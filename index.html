@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sketcher</title>
+</head>
+
+<body>
+
+  <div id="toolbar">
+   <div id="toolbar-container">
+  <button data-tool="line">Line</button>
+  <button data-tool="circle">Circle</button>
+  <button data-tool="ellipse">Ellipse</button>
+  <button data-tool="polyline">Polyline</button>
+</div>
+
+  <div id="action">
+    <select id="actionSelect">
+        <option value="">Select Action</option>
+        <option value="draw">Draw mode </option>
+        <option value="select">Selection mode</option>
+      </select>
+  </div>
+
+ <button id="saveCanvas">Save</button>
+<input type="file" id="uploadCanvas" accept=".json" />
+
+
+  </div>
+
+  <!-- ================= LEFT OBJECT PANEL ================= -->
+<div id="left-panel">
+
+  <div class="left-header">
+    <span>List of Created Object</span>
+    <span class="search-icon">🔍</span>
+  </div>
+
+  <div class="file-block">
+    <div class="file-title">
+      <span>▾ My file 1</span>
+      <div class="file-actions">
+      </div>
+    </div>
+
+   
+    
+    </div>
+
+  </div>
+</div>
+  <!-- ================= ri OBJECT PANEL ================= -->
+
+
+<div id="properties-panel">
+  <h3>Properties</h3>
+
+  <div id="linear-ui" style="display: none">
+
+  <h4>Line / Polyline</h4>
+
+  <!-- POINTS CONTAINER -->
+  <div id="line-points">
+
+    
+    <div class="point-block" data-point-index="0">
+
+      <strong>Point 1</strong>
+
+      <div class="prop">
+        <label>X</label>
+        <input class="point-x" type="number" step="0.1">
+      </div>
+
+      <div class="prop">
+        <label>Y</label>
+        <input class="point-y" type="number" step="0.1">
+      </div>
+
+      <div class="prop">
+        <label>Z</label>
+        <input class="point-z" type="number" step="0.1" value="0" disabled>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- COLOR -->
+  <div class="prop">
+    <label>Color</label>
+    <input id="lineColor" type="color">
+  </div>
+
+  <!-- UPDATE -->
+  <button id="updateLine">Update</button>
+     <button id="hideLine">Hide</button> 
+     <button id="deleteLine">Delete</button> 
+
+</div>
+
+  <!-- ================= CIRCLE / ELLIPSE UI ================= -->
+  <div id="circle-ui" style="display: none">
+
+    <h4>Circle / Ellipse</h4>
+
+    <div class="prop">
+      <label>Center X</label>
+      <input id="circleX" type="number" step="0.1">
+    </div>
+
+    <div class="prop">
+      <label>Center Y</label>
+      <input id="circleY" type="number" step="0.1">
+    </div>
+
+
+  <div class="prop">
+  <label>Radius X</label>
+  <input id="radiusX" type="number" step="1">
+</div>
+
+<div class="prop">
+  <label>Radius Y</label>
+  <input id="radiusY" type="number" step="1">
+</div>
+
+
+    <div class="prop">
+      <label>Color</label>
+      <input id="circleColor" type="color">
+    </div>
+
+    <button id="updateCircle">Update</button>
+     <button id="hideCircle">Hide</button> 
+     <button id="deleteCircle">Delete</button>
+
+  </div>
+
+</div>
+
+
+  <canvas id="canvas"> </canvas>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>

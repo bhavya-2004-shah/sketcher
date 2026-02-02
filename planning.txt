@@ -1,0 +1,67 @@
+sketcher/
+│
+├─ src/
+│   │
+│   ├─ engine/
+│   │   ├─ SketcherApp.ts        // App bootstrap & wiring
+│   │   └─ Renderer.ts           // Three.js scene, camera, loop
+│   │
+│   ├─ shapes/
+│   │   ├─ baseShape/
+│   │   │   ├─ Shape.ts          // Abstract base shape
+│   │   │   └─ ShapeTypes.ts     // Enum of shape types
+│   │   │
+│   │   ├─ Line.ts
+│   │   ├─ Circle.ts
+│   │   ├─ Ellipse.ts
+│   │   └─ Polyline.ts
+│   │
+│   ├─ tools/
+│   │   ├─ base/
+│   │   │   └─ Tool.ts           // Abstract drawing tool
+│   │   │
+│   │   ├─ LineTool.ts
+│   │   ├─ CircleTool.ts
+│   │   ├─ EllipseTool.ts
+│   │   └─ PolylineTool.ts
+│   │
+│   ├─ managers/
+│   │   ├─ ShapeManager.ts       // Add, update, delete shapes
+│   │   ├─ SelectionManager.ts   // Current selection state
+│   │   └─ FileManager.ts        // Save / load JSON
+│   │
+│   ├─ interactions/
+│   │   ├─ MouseHandler.ts       // Mouse events
+│   │   ├─ KeyboardHandler.ts    // Keyboard shortcuts
+│   │   └─ RaycastHelper.ts      // Raycasting utilities
+│   │
+│   ├─ ui/
+│   │   ├─ Toolbar/
+│   │   │   └─ Toolbar.tsx
+│   │   ├─ PropertiesPanel/
+│   │   │   └─ PropertiesPanel.tsx
+│   │   └─ FileMenu/
+│   │       └─ FileMenu.tsx
+│   │
+│   ├─ types/
+│   │   ├─ SketchShape.ts        // Runtime shape contract
+│   │   └─ SerializableShape.ts // JSON save/load contract
+│   │
+│   ├─ utils/
+│   │   ├─ math.ts               // Geometry helpers
+│   │   ├─ constants.ts          // App constants
+│   │   └─ uuid.ts               // ID generation
+│   │
+│   └─ main.ts                   // Entry point
+│
+├─ package.json
+├─ tsconfig.json
+└─ vite.config.ts
+
+
+
+
+now i want to create a left side to show the properties of the selected shape ..... in properties i want name of the shape , for line .. 2 points x,y,z for circle  and ellipse radius and rthe centre x,y, for center and the rx and ry 
+color for all shapes one hide button and one delete  button 
+
+I WANT TWO DIFFERENT uis ON IS FOR THE CIRCLE & ELLIPSE AND THE OYTHER IS ONE FOR  THE LINER AND POLYLINE CAN WE DO THTA ? FOR LINE ONLY X,Y,Z POSITIONS SHOULD BE DISPLAYEDFORN POINTS AND FOR CIRCLE THE CENTRE X , CENTRE Y AND CENTRE Z POSITION SHOULD BE DISPLAYED ALONG WITH THE RADIUS ..... ALSO ADD COLOR CHANGE AND THE UPDATE BUTTON TO BOTH  
