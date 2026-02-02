@@ -6,7 +6,7 @@ import { getScene } from "../engine/Renderer";
 
 let currentLine: THREE.Line | null = null;
 
-// const panel = document.getElementById("properties-panel")!;
+const panel = document.getElementById("properties-panel")!;
 const linearUI = document.getElementById("linear-ui")!;
 const hideBtn = document.getElementById("hideLine") as HTMLButtonElement; // New hide button
 const deleteBtn = document.getElementById("deleteLine") as HTMLButtonElement;

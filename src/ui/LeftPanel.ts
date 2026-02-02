@@ -3,88 +3,102 @@ import { shapeManager } from "../managers/ShapeManager";
 import { hideShape } from "../interactions/HideShape";
 import { deleteShape } from "../interactions/DeleteShape";
 import { getScene } from "../engine/Renderer";
-import { openLineUI } from "./LineProperties";
+import { openLineUI, closeLineUI } from "./LineProperties";
 import { openCircleUI } from "./CircleProperties";
 import { openEllipseUI } from "./EllipseProperties";
 import { hideAllProperties } from "./HideProperties";
 
-// import { shapeManager } from "../managers/ShapeManager";
-
 const leftPanel = document.getElementById("left-panel");
 const fileBlock = leftPanel?.querySelector(".file-block");
 
+// Global counters for stable display names
+const shapeCount: Record<string, number> = {};
+// Track objects already in the panel
+const objectToItem = new Map<THREE.Object3D, HTMLElement>();
 
+/* -------------------- INIT LEFT PANEL -------------------- */
 export function initLeftPanel() {
   shapeManager.subscribe(() => {
-    rebuildLeftPanel();
+    // Only add objects that aren't in the panel yet
+    const newObjects = shapeManager.getAll().filter(obj => !objectToItem.has(obj));
+    newObjects.forEach(obj => addObjectToLeftPanel(obj));
   });
 }
 
-
+/* -------------------- ADD OBJECT -------------------- */
 export function addObjectToLeftPanel(object: THREE.Object3D) {
   const shapeType = object.userData.shapeType;
   if (!shapeType) return;
 
-  /* MAIN ITEM */
+  // Check if object already has a displayName
+  let name = object.userData.displayName;
+
+  if (!name) {
+    // Count existing shapes of this type already in panel
+    const existingCount = Array.from(objectToItem.values())
+      .filter(item => item.textContent?.startsWith(shapeType)).length;
+
+    name = `${shapeType} `;
+    object.userData.displayName = name;
+  }
+
+  // Skip adding if already in panel (prevent duplicates)
+  if (object.userData.leftItem) return;
+
   const item = document.createElement("div");
   item.className = "object-item";
-  item.textContent = shapeType;
+  item.textContent = name;
 
-  /* 👁 HIDE BUTTON */
   const eyeBtn = document.createElement("button");
   eyeBtn.textContent = "👁";
-
   eyeBtn.onclick = (e) => {
     e.stopPropagation();
     hideShape(object);
   };
 
-  /* 🗑 DELETE BUTTON */
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "🗑️";
-
   deleteBtn.onclick = (e) => {
-  e.stopPropagation();
-  deleteShape(object, getScene());
-};
-
-  /* SELECT FROM LEFT PANEL */
-  item.onclick = () => {
-    shapeManager.select(object);
-    console.log("Selected from left panel", object.uuid);
-      hideAllProperties();
-     if (shapeType === "line" || shapeType === "polyline") {
-        openLineUI(object);
-        return;
-      }
-    
-      if (shapeType === "circle") {
-        openCircleUI(object);
-        return;
-      }
-    
-      if (shapeType === "ellipse") {
-      openEllipseUI(object);
-      return;
-    }
+    e.stopPropagation();
+    deleteShape(object, getScene());
+    removeFromLeftPanel(object);
   };
 
-  /* APPEND BUTTONS */
+  item.onclick = () => {
+    shapeManager.select(object);
+    hideAllProperties();
+
+    if (shapeType === "line" || shapeType === "polyline") openLineUI(object);
+    else if (shapeType === "circle") openCircleUI(object);
+    else if (shapeType === "ellipse") openEllipseUI(object);
+  };
+
   item.appendChild(eyeBtn);
   item.appendChild(deleteBtn);
-
   fileBlock?.appendChild(item);
 
-  /* STORE REF (for sync later) */
   object.userData.leftItem = item;
+  objectToItem.set(object, item);
 }
 
-function rebuildLeftPanel() {
+/* -------------------- REMOVE OBJECT -------------------- */
+export function removeFromLeftPanel(object: THREE.Object3D) {
+  const item = objectToItem.get(object);
+  if (item && item.parentElement) item.parentElement.removeChild(item);
+  objectToItem.delete(object);
+  // Optional: Close UI if current object is deleted
+  const shapeType = object.userData.shapeType;
+  if (shapeType === "line" || shapeType === "polyline") closeLineUI();
+}
+
+/* -------------------- OPTIONAL: REBUILD PANEL -------------------- */
+export function rebuildLeftPanel() {
   if (!fileBlock) return;
 
-  fileBlock.innerHTML = ""; // 🔥 clear old UI
+  fileBlock.innerHTML = "";
+  objectToItem.clear();
+  // Reset counters if you want fresh numbering
+  for (const key in shapeCount) shapeCount[key] = 0;
 
-  shapeManager.getAll().forEach(obj => {
-    addObjectToLeftPanel(obj);
-  });
+  shapeManager.getAll().forEach(obj => addObjectToLeftPanel(obj));
 }
