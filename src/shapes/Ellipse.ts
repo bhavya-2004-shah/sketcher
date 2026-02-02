@@ -17,7 +17,7 @@ export function createEllipse(
   const points = curve.getPoints(64);
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
-  const material = new THREE.LineBasicMaterial({ color: 0xffff00 });
+  const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
   const ellipse = new THREE.LineLoop(geometry, material);
 
   // 🔑 position is center

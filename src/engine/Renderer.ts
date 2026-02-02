@@ -6,7 +6,7 @@ let renderer: THREE.WebGLRenderer;
 
 export function rendererFunction(canvas: HTMLCanvasElement) {
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x222222);
+  scene.background = new THREE.Color(0xffffff);
 
   const width = window.innerWidth;
   const height = window.innerHeight;

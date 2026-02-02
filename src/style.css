@@ -1,176 +1,167 @@
-/* ================= RESET ================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: system-ui, -apple-system, sans-serif;
-}
-
+/* ================== GLOBAL STYLING ================== */
 body {
-  background: #d0d0d0;
-  height: 100vh;
-  overflow: hidden;
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #e5e5e5;
+  color: #333;
 }
 
-/* ================= CANVAS (BASE LAYER) ================= */
-#canvas {
-  position: fixed;
-  inset: 0;
-  background: black;              /* ✅ BLACK CANVAS */
-  z-index: 0;                     /* ⬅ LOWEST */
-}
-
-/* ================= LEFT PANEL ================= */
-#left-panel {
-  position: fixed;
-  top: 12px;
-  bottom: 12px;
-  left: 12px;
-  width: 260px;
-
-  background: #f7f7f7;
-  border-radius: 12px;
-  padding: 12px;
-
-  z-index: 10;                    /* ⬅ ABOVE CANVAS */
-}
-
-/* ================= RIGHT PROPERTIES PANEL ================= */
-#properties-panel {
-  position: fixed;
-  top: 12px;
-  bottom: 12px;
-  right: 12px;
-  width: 340px;
-
-  background: #f7f7f7;
-  border-radius: 12px;
-  padding: 16px;
-  overflow-y: auto;
-
-  z-index: 10;                    /* ⬅ ABOVE CANVAS */
-}
-
-/* ================= TOOLBAR (VERTICAL) ================= */
+/* ================== TOOLBAR ================== */
 #toolbar {
-  position: fixed;
-  top: 12px;
-  left: 300px;
-
   display: flex;
-  flex-direction: row;         /* ✅ VERTICAL */
+  align-items: center;
+  padding: 8px 16px;
   gap: 12px;
-
-  z-index: 10;                    /* ⬅ ABOVE CANVAS */
+  background-color: #ffffff;
+  border-bottom: 1px solid #d1d1d1;
+  z-index: 100;
+  position: relative;
 }
 
-/* TOOL BUTTON GROUP */
-#toolbar-container {
+.figma-pill-group {
   display: flex;
-  flex-direction: row;         /* ✅ VERTICAL BUTTONS */
-  gap: 6px;
-
-  background: #cac6c6;
-  padding: 8px;
-  border-radius: 12px;
-}
-
-/* TOOL BUTTONS */
-#toolbar-container button {
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: none;
-  background: white;
-  cursor: pointer;
-}
-
-/* ACTION DROPDOWN */
-#action {
-  background: #f7f7f7;
-  padding: 10px;
-  border-radius: 25px;
-}
-
-#action select {
-  width: 100%;
-  padding: 8px;
+  background-color: #f2f2f2;
   border-radius: 8px;
+  padding: 4px;
+  gap: 2px;
+}
+
+/* Tool Buttons (Logic preserved via tool-btn class) */
+.tool-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   border: none;
+  background: transparent;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  min-width: 60px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #333;
+  transition: all 0.1s ease;
 }
 
-/* ================= PROPERTIES PANEL CONTENT ================= */
-#properties-panel h3 {
-  font-size: 16px;
-  margin-bottom: 12px;
+.tool-btn:hover {
+  background-color: #e6e6e6;
 }
 
-#properties-panel h4 {
-  font-size: 14px;
-  margin: 14px 0 8px;
+/* THE BLUE SELECTION STATE */
+.tool-btn.active {
+  background-color: #18a0fb !important;
+  color: white !important;
 }
 
+/* ================== PANELS (Left & Properties) ================== */
+#left-panel, #properties-panel {
+  position: fixed;
+  background-color: #ffffff;
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  z-index: 10;
+  overflow-y: auto;
+}
+
+#left-panel {
+  top: 70px;
+  left: 10px;
+  width: 240px;
+  height: 90%;
+}
+
+#properties-panel {
+  top: 70px;
+  right: 10px;
+  width: 260px;
+  height: 800px;
+  padding: 16px;
+}
+
+/* Headers */
+.left-header, #properties-panel h3 {
+  padding: 12px 16px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #888;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Property Inputs */
 .prop {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  justify-content: space-between;
+  margin-bottom: 16px;
 }
 
 .prop label {
-  font-size: 13px;
-  color: #555;
+  font-size: 12px;
+  color: #666;
 }
 
 .prop input {
-  width: 140px;
+  width: 70px;
+  padding: 4px 6px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.prop input[type="color"] {
+  width: 30px;
+  height: 24px;
+  padding: 0;
+  border: none;
+}
+
+/* ================== CANVAS ================== */
+#canvas {
+  display: block;
+  background-color: #e5e5e5; /* The Grey Color you requested */
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+/* ================== ACTION SELECT ================== */
+#actionSelect {
   padding: 6px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid #d1d1d1;
+  font-size: 12px;
+  outline: none;
 }
 
-button {
+/* ================== BUTTONS (Update/Hide/Delete) ================== */
+#properties-panel button {
   width: 100%;
-  padding: 8px;
   margin-top: 8px;
-  border-radius: 10px;
-  border: none;
-  background: #eee;
-  cursor: pointer;
-}
-
-/* ================= LEFT PANEL CONTENT ================= */
-.left-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  margin-bottom: 12px;
-}
-
-.object-item {
-  display: flex;
-  justify-content: space-between;
   padding: 8px;
-  border-radius: 8px;
-  margin-bottom: 4px;
-  cursor: pointer;
+  font-weight: 600;
 }
 
-.object-item.active {
-  background: #4c8bf5;
-  color: white;
-}
-/* LEFT PANEL CONTAINER */
-#left-panel {
-  height: 100vh;          /* or the height your layout uses */
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;       /* prevent double scrollbars */
+#deleteLine, #deleteCircle {
+  background-color: #fff;
+  color: #f24822; /* Red Hex */
+  border: 1px solid #f24822;
 }
 
-/* SCROLLABLE SHAPE LIST */
-#left-panel .file-block {
-  flex: 1;                /* take remaining height */
-  overflow-y: auto;       /* 🔥 enable vertical scrolling */
-  overflow-x: hidden;
-  padding: 6px;
+#deleteLine:hover, #deleteCircle:hover {
+  background-color: #f24822;
+  color: #fff;
+}
+#updateLine, #updateCircle {
+  background-color: #fff;
+  color: #6493d1; /* Red Hex */
+  border: 1px solid #ebe7e6;
+}
+
+#updateLine:hover, #updateCircle:hover {
+  background-color: #6493d1;
+  color: #fff;
 }

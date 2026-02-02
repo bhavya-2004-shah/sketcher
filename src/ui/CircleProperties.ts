@@ -1,5 +1,5 @@
 import * as THREE from "three";
-// import { shapeManager } from "../managers/ShapeManager";
+
 import { hideShape } from "../interactions/HideShape";
 import { deleteShape } from "../interactions/DeleteShape";
 import { getScene } from "../engine/Renderer";
