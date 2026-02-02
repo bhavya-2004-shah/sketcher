@@ -34,10 +34,6 @@ export function addObjectToLeftPanel(object: THREE.Object3D) {
   let name = object.userData.displayName;
 
   if (!name) {
-    // Count existing shapes of this type already in panel
-    const existingCount = Array.from(objectToItem.values())
-      .filter(item => item.textContent?.startsWith(shapeType)).length;
-
     name = `${shapeType} `;
     object.userData.displayName = name;
   }
